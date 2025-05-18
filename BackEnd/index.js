@@ -25,7 +25,16 @@ app.get('/order_tbl_data', [], async (req,res) =>{
         const rs = await pool.query('select * from order_tbl')
         res.json({status : '200', message : 'success', data : rs.rows})
     }catch(err){
+        console.error(err.message)
+    }
+})
 
+app.get('/order_name', [], async (req,res) =>{
+    try{
+        const rs = await pool.query('select * from order_name')
+        res.json({status : '200', message : 'success', data : rs.rows})
+    }catch(err){
+        console.error(err.message)
     }
 })
 
