@@ -38,6 +38,15 @@ app.get('/order_name', [], async (req,res) =>{
     }
 })
 
+app.get('/customer_details', [], async (req,res) =>{
+    try{
+        const rs = await pool.query('select name,age,gender,order_name,order_date from order_name, order_tbl where order_name.order_id = order_tbl.item_id')
+        res.json({status : '200', message : 'success', data : rs.rows})
+    }catch(err){
+        console.log(err.message)
+    }
+})
+
 
 app.listen(port, () => {
     console.log(`Server Starts on Port No. http://localhost:${port}`)

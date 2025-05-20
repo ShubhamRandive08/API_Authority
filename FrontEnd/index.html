@@ -4,16 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
     <title>API handling</title>
 </head>
 <style>
-    *{
+    * {
         padding: 0;
         margin: 0;
         box-sizing: border-box;
     }
 
-    .main{
+    .main {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -26,25 +28,50 @@
     }
 </style>
 
-<body>
+<script>
+    function apiCall() {
+        axios.get('http://localhost:3000/order_tbl_data')
+            .then(responce => {
+                console.log(responce.data.data)
+            })
+
+        axios.get('http://localhost:3000/customer_details')
+            .then(responce => {
+                l = responce.data.data
+                for (i = 0; i < l.length; i++) {
+                    var rowData = "<tr><td>" + l[i].name + "</td>";
+                    rowData += "<td>" + l[i].age + "</td>";
+                    rowData += "<td>" + l[i].gender + "</td>";
+                    rowData += "<td>" + l[i].order_name + "</td>";
+                    rowData += "<td>" + l[i].order_date + "</td>";
+                    rowData += "<td><input type = 'button' style='padding:.7rem .8rem;' value='EDIT' class='btn btn-success'></td>";
+                    rowData += "<td><input type = 'button' style='padding:.7rem .8rem;' value='DELETE' class='btn btn-success'></td>";
+                    rowData += "</tr>";
+                    $('#dt').append(rowData);
+                }
+            })
+    }
+</script>
+
+<body onload="apiCall()">
     <div class="main">
         <h3 class="main_heading">Handling the API and its Responce</h3>
         <div class="p1">
-            <table border="1">
-                <tr>
-                    <th>Name</th>
-                    <th>Gender</th>
-                    <th>Age</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                </tr>
-                <tr>
-                    <td>Shubham</td>
-                    <td>Male</td>
-                    <td>21</td>
-                    <td><button>EDIT</button></td>
-                    <td><button>DELETE</button></td>
-                </tr>
+            <table border="1" style="text-align: center;">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Order name</th>
+                        <th>Order Date</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody id="dt">
+
+                </tbody>
             </table>
         </div>
     </div>
